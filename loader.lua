@@ -1,7 +1,7 @@
 --// ULTIMATE LOADER
 
 local BASE = "https://raw.githubusercontent.com/KhangICO/SOLRNG/main/modules/"
-local FILES = {"Config","Core","Esp","Auto Collect","ui"}
+local FILES = {"Core","Esp","Auto Collect","ui"}
 
 local Cache = {}
 local Modules = {}
