@@ -1,45 +1,44 @@
---// MAIN LOADER
+--// ULTIMATE LOADER
 
 local BASE = "https://raw.githubusercontent.com/KhangICO/SOLRNG/main/modules/"
+local FILES = {"config","core","stats","esp","autofarm","hop","ui"}
 
-local ModulesList = {
-    "config",
-    "autofarm",
-    "esp",
-    "stats",
-    "ui"
-}
-
+local Cache = {}
 local Modules = {}
 getgenv().Modules = Modules
 
 local function fetch(name)
-    local url = BASE .. name .. ".lua"
-    local ok, res = pcall(function()
+    if Cache[name] then return Cache[name] end
+    
+    local url = BASE..name..".lua"
+    
+    local ok,res = pcall(function()
         return game:HttpGet(url)
     end)
     
     if ok then
+        Cache[name] = res
         return res
     else
-        warn("Retry:", name)
+        warn("Retry:",name)
         task.wait(1)
         return fetch(name)
     end
 end
 
-for _,name in ipairs(ModulesList) do
+for _,name in ipairs(FILES) do
     local code = fetch(name)
-    local success, module = pcall(function()
+    local success,module = pcall(function()
         return loadstring(code)()
     end)
     
     if success and module then
         Modules[name] = module
-        print("Loaded:", name)
     end
 end
 
--- AUTO START
-if Modules.autofarm then Modules.autofarm.start() end
-if Modules.ui then Modules.ui.start() end
+-- START
+Modules.core.init()
+Modules.ui.start()
+Modules.autofarm.start()
+Modules.hop.start()
