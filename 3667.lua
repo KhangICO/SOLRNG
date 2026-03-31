@@ -48,23 +48,6 @@ title.Text = "🥚 ADVANCED EGG HUB"
 title.TextColor3 = Color3.new(1,1,1)
 title.BackgroundTransparency = 1
 title.TextScaled = true
-
-local extBtn = Instance.new("TextButton", frame)
-extBtn.Size = UDim2.new(1,0,0,40)
-extBtn.Position = UDim2.new(0,0,0,210)
-extBtn.Text = "External Script: OFF"
-extBtn.BackgroundColor3 = Color3.fromRGB(50,50,50)
-
-extBtn.MouseButton1Click:Connect(function()
-    getgenv().LoadExternal = not getgenv().LoadExternal
-    
-    extBtn.Text = "External Script: "..(getgenv().LoadExternal and "ON" or "OFF")
-    
-    if getgenv().LoadExternal then
-        loadExternalScript()
-    end
-end)
-
 -- SCROLL
 local scroll = Instance.new("ScrollingFrame", frame)
 scroll.Size = UDim2.new(1,0,0,200)
